@@ -9,7 +9,7 @@
       "assertions": [
         {
           "id": "constructs-fetch-command",
-          "text": "Response includes a 'sumosearch fetch' command"
+          "text": "Response includes a 'uv run sumosearch fetch' command"
         },
         {
           "id": "uses-correct-time-window",
@@ -28,12 +28,12 @@
     {
       "id": 2,
       "prompt": "Run this Sumo Logic search and give me the results as JSON so I can pipe them to jq:\n  query: _sourceCategory=prod/checkout status=500\n  from: 2026-03-20T00:00:00\n  to: 2026-03-20T23:59:59\n  pages: 3",
-      "expected_output": "Claude runs `sumosearch fetch --query '_sourceCategory=prod/checkout status=500' --from 2026-03-20T00:00:00 --to 2026-03-20T23:59:59 --format json --pages 3` and returns the JSON output.",
+      "expected_output": "Claude runs `uv run sumosearch fetch --query '_sourceCategory=prod/checkout status=500' --from 2026-03-20T00:00:00 --to 2026-03-20T23:59:59 --format json --pages 3` and returns the JSON output.",
       "files": [],
       "assertions": [
         {
           "id": "constructs-fetch-command",
-          "text": "Response includes a 'sumosearch fetch' command"
+          "text": "Response includes a 'uv run sumosearch fetch' command"
         },
         {
           "id": "uses-format-json",
@@ -56,12 +56,12 @@
     {
       "id": 3,
       "prompt": "I'm getting a 'credentials not found' error when I try to use sumosearch. Can you help me set it up?",
-      "expected_output": "Claude explains that credentials need to be configured, explains what sumosearch init does (sets up ~/.sumosearch), and offers to run `sumosearch init` to walk through the interactive setup.",
+      "expected_output": "Claude explains that credentials need to be configured, explains what sumosearch init does (sets up ~/.sumosearch), and offers to run `uv run sumosearch init` to walk through the interactive setup.",
       "files": [],
       "assertions": [
         {
           "id": "mentions-sumosearch-init",
-          "text": "Response mentions 'sumosearch init' as the fix"
+          "text": "Response mentions 'uv run sumosearch init' as the fix"
         },
         {
           "id": "explains-what-init-does",
@@ -69,11 +69,11 @@
         },
         {
           "id": "offers-to-run-init",
-          "text": "Response offers to run sumosearch init on the user's behalf, or clearly walks through the steps"
+          "text": "Response offers to run 'uv run sumosearch init' on the user's behalf, or clearly walks through the steps"
         },
         {
           "id": "no-generic-advice",
-          "text": "Response does not give only vague advice (e.g. 'check your config') without pointing to the specific sumosearch init command"
+          "text": "Response does not give only vague advice (e.g. 'check your config') without pointing to the specific 'uv run sumosearch init' command"
         }
       ]
     }

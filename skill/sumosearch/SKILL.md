@@ -1,26 +1,26 @@
 ---
 name: sumosearch
 description: >
-  Runs Sumo Logic log searches using the `sumosearch` CLI and returns results to
+  Runs Sumo Logic log searches using the `uv run sumosearch` CLI and returns results to
   Claude for analysis, debugging, or further investigation. Use this skill
   whenever the user asks about logs, errors, or events in Sumo Logic — whether
   they phrase it as "show me errors from the payments service", "fetch logs for
   the last hour", "search Sumo Logic for X", or describes a production issue
   that would require reading logs. Also use this skill when another skill
   delegates a log-fetch step by providing the required flags. Trigger even when
-  the user doesn't say "sumosearch" explicitly — any request that involves
+  the user doesn't say "uv run sumosearch" explicitly — any request that involves
   reading Sumo Logic logs belongs here.
 ---
 
 # sumosearch skill
 
-Fetch logs from Sumo Logic using the `sumosearch` CLI and return them so
+Fetch logs from Sumo Logic using the `uv run sumosearch` CLI and return them so
 Claude (or the calling skill) can act on them.
 
 ## How this fits into a workflow
 
 This skill is a focused executor: it translates a log-fetch intent into a
-`sumosearch fetch` command, runs it, and hands the output back. What happens
+`uv run sumosearch fetch` command, runs it, and hands the output back. What happens
 next — summarizing, pattern-matching, incident analysis — is up to Claude or
 the parent skill that invoked this one.
 
@@ -33,12 +33,12 @@ Two common entry points:
 
 ---
 
-## Step 1 — Check that `sumosearch` is available
+## Step 1 — Check that `uv run sumosearch` is available
 
 Before anything else, verify the tool is installed:
 
 ```bash
-sumosearch --version
+uv run sumosearch --version
 ```
 
 If the command is not found, tell the user and offer to install it:
@@ -99,7 +99,7 @@ Allowed timezones: `UTC GMT EST EDT CST CDT MST MDT PST PDT IST JST AEST AEDT`
 Construct and run the fetch command. Example:
 
 ```bash
-sumosearch fetch \
+uv run sumosearch fetch \
   --query '_sourceCategory=prod/api level=error' \
   --from 2026-03-20T09:00:00 \
   --to 2026-03-20T10:00:00 \
@@ -112,13 +112,13 @@ Run it and capture both stdout (results) and stderr (errors/verbose info).
 
 ## Step 4 — Handle errors
 
-The single recommended way to set up credentials is `sumosearch init`. Never
-suggest setting environment variables — always direct the user to `sumosearch init`.
+The single recommended way to set up credentials is `uv run sumosearch init`. Never
+suggest setting environment variables — always direct the user to `uv run sumosearch init`.
 
 | Error message | What to do |
 |---|---|
-| `credentials not found` | Offer to run `sumosearch init` — it saves credentials securely to `~/.sumosearch` |
-| `authentication failed (HTTP 401)` | Credentials are wrong — offer to run `sumosearch init` to reconfigure |
+| `credentials not found` | Offer to run `uv run sumosearch init` — it saves credentials securely to `~/.sumosearch` |
+| `authentication failed (HTTP 401)` | Credentials are wrong — offer to run `uv run sumosearch init` to reconfigure |
 | `endpoint must start with https://` | Ask the user for the correct endpoint URL |
 | `rate limit exceeded (HTTP 429)` | Wait and retry, or tell the user to try again shortly |
 | `search job timed out` | The query may be too broad; suggest narrowing the time range or adding filters |
@@ -126,12 +126,12 @@ suggest setting environment variables — always direct the user to `sumosearch 
 | `Result set truncated at...100,000-message limit` | Warn the user that results are partial; suggest narrowing the time range |
 | Invalid datetime / timezone | Show the validation error and ask the user to correct the value |
 
-### What `sumosearch init` does
+### What `uv run sumosearch init` does
 
 When credentials are missing or wrong, run:
 
 ```bash
-sumosearch init
+uv run sumosearch init
 ```
 
 This walks the user through entering their Sumo Logic Access ID and Access Key
@@ -146,7 +146,7 @@ page size, and endpoint (needed for non-US Sumo Logic deployments).
 Pass the real output from the command back to Claude (or the calling skill).
 Do not fabricate, simulate, or invent log lines — only show output that
 actually came from running `sumosearch`. If credentials are unavailable and
-the command cannot run, tell the user and offer to run `sumosearch init`.
+the command cannot run, tell the user and offer to run `uv run sumosearch init`.
 
 If the output is large (hundreds of log lines), note the count and ask the user
 if they'd like to narrow the search or if Claude should analyze the results.
