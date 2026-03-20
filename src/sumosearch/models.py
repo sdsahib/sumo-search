@@ -18,6 +18,7 @@ TIMEZONE_ALLOWLIST: dict[str, str] = {
     "JST": "Asia/Tokyo",
     "AEST": "Australia/Sydney",
     "AEDT": "Australia/Sydney",
+    "CET": "Europe/Paris",
 }
 
 POLL_INTERVAL_SECONDS: int = 5

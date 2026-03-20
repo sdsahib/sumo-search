@@ -64,7 +64,7 @@ uv run sumosearch --help
 
 1. **Credentials** — sourced only from env vars (`SUMO_ACCESS_ID`, `SUMO_ACCESS_KEY`, `SUMO_ENDPOINT`), config file (`~/.config/sumoutility/config.toml`, perms `0600`), or explicit CLI flags. Secrets MUST NOT appear in logs, errors, or tracebacks.
 
-2. **Output** — stdout for data (human-readable by default, JSON via `--output json`), stderr for errors. Exit codes: 0 = success, non-zero = failure.
+2. **Output** — stdout for data (human-readable by default, JSON via `--format json`), stderr for errors. Exit codes: 0 = success, non-zero = failure.
 
 3. **Dependencies** — minimal; prefer stdlib. New third-party deps require explicit justification in `pyproject.toml`.
 
