@@ -42,9 +42,15 @@ def _build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", metavar="COMMAND")
 
     # -- init subcommand --
-    subparsers.add_parser(
+    init = subparsers.add_parser(
         "init",
         help="Interactive credential setup — creates or updates ~/.sumosearch",
+    )
+    init.add_argument(
+        "--host",
+        default=None,
+        metavar="URL",
+        help=f"API base URL for non-US deployments (default: {DEFAULT_ENDPOINT})",
     )
 
     # -- fetch subcommand --
@@ -137,7 +143,7 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _handle_init() -> int:
+def _handle_init(args: argparse.Namespace) -> int:
     config_path = DEFAULT_CONFIG_PATH
     existing: Config | None = None
     if config_path.exists():
@@ -212,12 +218,26 @@ def _handle_init() -> int:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 
+    host_default = (
+        args.host
+        if args.host is not None
+        else (existing.endpoint if existing else DEFAULT_ENDPOINT)
+    )
+    endpoint = prompt_visible("ENDPOINT", host_default) or host_default
+    if not endpoint.startswith("https://"):
+        print(
+            f"Error: endpoint must start with https://: {endpoint}",
+            file=sys.stderr,
+        )
+        return 1
+
     cfg = Config(
         sumo_access_id=access_id,
         sumo_access_key=access_key,
         timezone=timezone,
         page_size=page_size,
         pages=pages,
+        endpoint=endpoint,
     )
     try:
         save_config(cfg, config_path)
@@ -286,13 +306,16 @@ def _resolve_fetch_defaults(
         timezone = "UTC"
         _tz_src = "default"
 
-    # endpoint: CLI > env > default
+    # endpoint: CLI > env > config > default
     if args.endpoint is not None:
         endpoint = args.endpoint
         _ep_src = "CLI flag"
     elif "SUMO_ENDPOINT" in os.environ:
         endpoint = os.environ["SUMO_ENDPOINT"]
         _ep_src = "SUMO_ENDPOINT env"
+    elif cfg is not None:
+        endpoint = cfg.endpoint
+        _ep_src = "config file"
     else:
         endpoint = DEFAULT_ENDPOINT
         _ep_src = "default"
@@ -392,7 +415,7 @@ def main() -> None:
 
     try:
         if args.command == "init":
-            sys.exit(_handle_init())
+            sys.exit(_handle_init(args))
         elif args.command == "fetch":
             sys.exit(_handle_fetch(args))
         else:

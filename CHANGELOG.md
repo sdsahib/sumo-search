@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.0] - 2026-03-20
+- [MINOR] Added the `--host` config to `init` command
+- [MINOR] Added SKILL file for claude
+
 ## [0.1.1] - 2026-03-20
 - [PATCH] Updated the project name.
 

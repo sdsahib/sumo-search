@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 from sumosearch.exceptions import ConfigError
-from sumosearch.models import Config
+from sumosearch.models import DEFAULT_ENDPOINT, Config
 
 DEFAULT_CONFIG_PATH: Path = Path.home() / ".sumosearch"
 
@@ -43,6 +43,7 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> Config:
         timezone=data.get("TIMEZONE", "UTC"),
         page_size=page_size,
         pages=pages,
+        endpoint=data.get("ENDPOINT", DEFAULT_ENDPOINT),
     )
 
 
@@ -53,6 +54,7 @@ def save_config(config: Config, path: Path = DEFAULT_CONFIG_PATH) -> None:
         f"TIMEZONE={config.timezone}\n"
         f"PAGE_SIZE={config.page_size}\n"
         f"PAGES={config.pages}\n"
+        f"ENDPOINT={config.endpoint}\n"
     )
     try:
         path.write_text(content, encoding="utf-8")

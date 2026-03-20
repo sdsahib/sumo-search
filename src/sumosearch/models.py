@@ -35,6 +35,7 @@ class Config:
     timezone: str = "UTC"
     page_size: int = 100
     pages: int = 1
+    endpoint: str = DEFAULT_ENDPOINT
 
 
 @dataclass
