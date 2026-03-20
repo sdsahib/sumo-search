@@ -1,0 +1,81 @@
+{
+  "skill_name": "sumosearch",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can you pull the last hour of errors from the payments service in Sumo Logic? We started seeing timeouts around 09:00 UTC today (2026-03-20) and I want to see what's in the logs.",
+      "expected_output": "Claude asks for or derives a Sumo Logic query, confirms the time window 2026-03-20T09:00:00 to 2026-03-20T10:00:00, then constructs and runs a sumosearch fetch command capturing the results.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "constructs-fetch-command",
+          "text": "Response includes a 'sumosearch fetch' command"
+        },
+        {
+          "id": "uses-correct-time-window",
+          "text": "Command uses or proposes --from 2026-03-20T09:00:00 and --to 2026-03-20T10:00:00 (or asks user to confirm the window)"
+        },
+        {
+          "id": "asks-for-or-derives-query",
+          "text": "Response either asks the user for a query string, or derives one plausibly related to payments errors/timeouts"
+        },
+        {
+          "id": "no-invented-results",
+          "text": "Response does not fabricate actual log lines as if real Sumo Logic data was returned"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Run this Sumo Logic search and give me the results as JSON so I can pipe them to jq:\n  query: _sourceCategory=prod/checkout status=500\n  from: 2026-03-20T00:00:00\n  to: 2026-03-20T23:59:59\n  pages: 3",
+      "expected_output": "Claude runs `sumosearch fetch --query '_sourceCategory=prod/checkout status=500' --from 2026-03-20T00:00:00 --to 2026-03-20T23:59:59 --format json --pages 3` and returns the JSON output.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "constructs-fetch-command",
+          "text": "Response includes a 'sumosearch fetch' command"
+        },
+        {
+          "id": "uses-format-json",
+          "text": "Command includes --format json"
+        },
+        {
+          "id": "uses-pages-3",
+          "text": "Command includes --pages 3"
+        },
+        {
+          "id": "uses-correct-query",
+          "text": "Command includes the query _sourceCategory=prod/checkout status=500"
+        },
+        {
+          "id": "no-unnecessary-prompting",
+          "text": "Response does NOT ask for arguments that were already provided (query, from, to, pages)"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I'm getting a 'credentials not found' error when I try to use sumosearch. Can you help me set it up?",
+      "expected_output": "Claude explains that credentials need to be configured, explains what sumosearch init does (sets up ~/.sumosearch), and offers to run `sumosearch init` to walk through the interactive setup.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "mentions-sumosearch-init",
+          "text": "Response mentions 'sumosearch init' as the fix"
+        },
+        {
+          "id": "explains-what-init-does",
+          "text": "Response explains that sumosearch init sets up ~/.sumosearch with credentials (or equivalent explanation)"
+        },
+        {
+          "id": "offers-to-run-init",
+          "text": "Response offers to run sumosearch init on the user's behalf, or clearly walks through the steps"
+        },
+        {
+          "id": "no-generic-advice",
+          "text": "Response does not give only vague advice (e.g. 'check your config') without pointing to the specific sumosearch init command"
+        }
+      ]
+    }
+  ]
+}

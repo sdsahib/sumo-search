@@ -39,8 +39,7 @@ uv sync
 Credentials are resolved in this order:
 
 1. **CLI flags** — `--access-id` / `--access-key`
-2. **Environment variables** — `SUMO_ACCESS_ID`, `SUMO_ACCESS_KEY`
-3. **Config file** — `~/.sumosearch` (permissions `0600`)
+2. **Config file** — `~/.sumosearch` (permissions `0600`)
 
 ### Interactive setup (recommended)
 
@@ -57,17 +56,6 @@ TIMEZONE=UTC
 PAGE_SIZE=100
 PAGES=1
 ```
-
-### Environment variables (alternative)
-
-If you prefer not to use a config file, export credentials directly:
-
-```bash
-export SUMO_ACCESS_ID="your-access-id"
-export SUMO_ACCESS_KEY="your-access-key"
-export SUMO_ENDPOINT="https://api.eu.sumologic.com/api/v1"  # optional, non-US deployments only
-```
-
 ---
 
 ## Usage
