@@ -1,6 +1,9 @@
 # Changelog
+## [Unreleased] - 2026-03-20
+- [PATCH] Updated Readme with usage examples and troubleshooting tips
 
-## [0.1.0] - 2026-03-18
+
+## [0.1.0] - 2026-03-19
 
 ### Added
 
