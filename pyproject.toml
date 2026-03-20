@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "sumo"
-version = "0.1.0"
+name = "sumosearch"
+version = "0.1.1"
 description = "Sumo Logic search log fetcher CLI"
 requires-python = ">=3.11"
 dependencies = [

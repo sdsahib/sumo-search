@@ -1,7 +1,11 @@
 # Changelog
+
+## [0.1.1] - 2026-03-20
+- [PATCH] Updated the project name.
+
+
 ## [Unreleased] - 2026-03-20
 - [PATCH] Updated Readme with usage examples and troubleshooting tips
-
 
 ## [0.1.0] - 2026-03-19
 
