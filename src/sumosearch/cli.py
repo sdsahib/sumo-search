@@ -46,13 +46,6 @@ def _build_parser() -> argparse.ArgumentParser:
         "init",
         help="Interactive credential setup — creates or updates ~/.sumosearch",
     )
-    init.add_argument(
-        "--host",
-        default=None,
-        metavar="URL",
-        help=f"API base URL for non-US deployments (default: {DEFAULT_ENDPOINT})",
-    )
-
     # -- fetch subcommand --
     fetch = subparsers.add_parser(
         "fetch",
@@ -143,7 +136,7 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _handle_init(args: argparse.Namespace) -> int:
+def _handle_init(_args: argparse.Namespace) -> int:
     config_path = DEFAULT_CONFIG_PATH
     existing: Config | None = None
     if config_path.exists():
@@ -218,11 +211,7 @@ def _handle_init(args: argparse.Namespace) -> int:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 
-    host_default = (
-        args.host
-        if args.host is not None
-        else (existing.endpoint if existing else DEFAULT_ENDPOINT)
-    )
+    host_default = existing.endpoint if existing else DEFAULT_ENDPOINT
     endpoint = prompt_visible("ENDPOINT", host_default) or host_default
     if not endpoint.startswith("https://"):
         print(

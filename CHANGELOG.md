@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.4.0] - 2026-03-20
+- [MINOR] Updated init command to update the host
 
 ## [0.3.0] - 2026-03-20
 - [MINOR] implemented --version flag to display current version and exit
@@ -19,7 +21,7 @@
 
 ### Added
 
-- `uv run sumosearch init` — interactive credential setup, creates `~/.sumo` with `0600` permissions
+- `uv run sumosearch init` — interactive credential setup, creates `~/.sumosearch` with `0600` permissions
 - `uv run sumosearch fetch` — submit Sumo Logic search job, poll for completion, paginate results, output as text/JSON/CSV
 - Credential resolution: CLI flags > environment variables > config file
 - `--format text` (default), `--format json`, `--format csv` output modes
