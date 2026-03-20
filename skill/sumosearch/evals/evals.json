@@ -4,7 +4,7 @@
     {
       "id": 1,
       "prompt": "Can you pull the last hour of errors from the payments service in Sumo Logic? We started seeing timeouts around 09:00 UTC today (2026-03-20) and I want to see what's in the logs.",
-      "expected_output": "Claude asks for or derives a Sumo Logic query, confirms the time window 2026-03-20T09:00:00 to 2026-03-20T10:00:00, then constructs and runs a sumosearch fetch command capturing the results.",
+      "expected_output": "Claude asks for a Sumo Logic query, confirms the time window 2026-03-20T09:00:00 to 2026-03-20T10:00:00, then constructs and runs a `uv run sumosearch fetch` command capturing the results.",
       "files": [],
       "assertions": [
         {
@@ -56,24 +56,24 @@
     {
       "id": 3,
       "prompt": "I'm getting a 'credentials not found' error when I try to use sumosearch. Can you help me set it up?",
-      "expected_output": "Claude explains that credentials need to be configured, explains what sumosearch init does (sets up ~/.sumosearch), and offers to run `uv run sumosearch init` to walk through the interactive setup.",
+      "expected_output": "Claude explains that credentials need to be configured, explains what `uv run sumosearch init` does (sets up ~/.sumosearch), and offers to run `uv run sumosearch init` to walk through the interactive setup.",
       "files": [],
       "assertions": [
         {
           "id": "mentions-sumosearch-init",
-          "text": "Response mentions 'uv run sumosearch init' as the fix"
+          "text": "Response mentions '`uv run sumosearch init`' as the fix"
         },
         {
           "id": "explains-what-init-does",
-          "text": "Response explains that sumosearch init sets up ~/.sumosearch with credentials (or equivalent explanation)"
+          "text": "Response explains that `uv run sumosearch init` sets up ~/.sumosearch with credentials (or equivalent explanation)"
         },
         {
           "id": "offers-to-run-init",
-          "text": "Response offers to run 'uv run sumosearch init' on the user's behalf, or clearly walks through the steps"
+          "text": "Response offers to run '`uv run sumosearch init`' on the user's behalf, or clearly walks through the steps"
         },
         {
           "id": "no-generic-advice",
-          "text": "Response does not give only vague advice (e.g. 'check your config') without pointing to the specific 'uv run sumosearch init' command"
+          "text": "Response does not give only vague advice (e.g. 'check your config') without pointing to the specific '`uv run sumosearch init`' command"
         }
       ]
     }

@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-`sumo` — a Sumo Logic search log fetcher CLI. Authenticates via `SUMO_ACCESS_ID` / `SUMO_ACCESS_KEY`, creates asynchronous search jobs, polls for completion, and outputs results as plain text, CSV, or JSON.
+`uv run sumosearch` — a Sumo Logic search log fetcher CLI. Authenticates via `SUMO_ACCESS_ID` / `SUMO_ACCESS_KEY`, creates asynchronous search jobs, polls for completion, and outputs results as plain text, CSV, or JSON.
 
-Package name: `sumosearch` | Entry point: `sumosearch` CLI | Source: `src/sumosearch/`
+Package name: `sumosearch` | Entry point: `uv run sumosearch` CLI | Source: `src/sumosearch/`
 
 ## Tech Stack
 

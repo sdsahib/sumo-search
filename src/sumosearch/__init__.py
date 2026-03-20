@@ -1,1 +1,6 @@
-__version__ = "0.1.0"
+from importlib.metadata import version, PackageNotFoundError
+
+try:
+    __version__ = version("sumosearch")
+except PackageNotFoundError:
+    __version__ = "unknown"

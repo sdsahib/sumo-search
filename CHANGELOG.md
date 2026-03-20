@@ -1,5 +1,9 @@
 # Changelog
 
+
+## [0.3.0] - 2026-03-20
+- [MINOR] implemented --version flag to display current version and exit
+
 ## [0.2.0] - 2026-03-20
 - [MINOR] Added the `--host` config to `init` command
 - [MINOR] Added SKILL file for claude
@@ -15,8 +19,8 @@
 
 ### Added
 
-- `sumo init` — interactive credential setup, creates `~/.sumo` with `0600` permissions
-- `sumo fetch` — submit Sumo Logic search job, poll for completion, paginate results, output as text/JSON/CSV
+- `uv run sumosearch init` — interactive credential setup, creates `~/.sumo` with `0600` permissions
+- `uv run sumosearch fetch` — submit Sumo Logic search job, poll for completion, paginate results, output as text/JSON/CSV
 - Credential resolution: CLI flags > environment variables > config file
 - `--format text` (default), `--format json`, `--format csv` output modes
 - `--timezone`, `--sort`, `--page-size`, `--pages` parameters
