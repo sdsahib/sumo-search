@@ -44,7 +44,7 @@ Credentials are resolved in this order:
 ### Interactive setup (recommended)
 
 ```bash
-sumosearch init
+uv run sumosearch init
 ```
 
 This walks you through setting up your credentials and saves them to `~/.sumosearch`. The config file format is a plain key=value file:
@@ -63,27 +63,27 @@ PAGES=1
 ### Commands
 
 ```
-sumosearch <COMMAND> [OPTIONS]
+uv run sumosearch <COMMAND> [OPTIONS]
 
 Commands:
   init     Interactive credential setup
   fetch    Submit a search job and output results
 ```
 
-### `sumosearch init`
+### `uv run sumosearch init`
 
 Interactively configure credentials and defaults. Creates or updates `~/.sumosearch`.
 
 ```bash
-sumosearch init
+uv run sumosearch init
 ```
 
-### `sumosearch fetch`
+### `uv run sumosearch fetch`
 
 Submit a Sumo Logic search job, poll for completion, and print results.
 
 ```
-sumosearch fetch --query QUERY --from FROM --to TO [OPTIONS]
+uv run sumosearch fetch --query QUERY --from FROM --to TO [OPTIONS]
 
 Required:
   --query TEXT        Sumo Logic search query string
@@ -109,7 +109,7 @@ Optional:
 **Basic search — last hour of errors:**
 
 ```bash
-sumosearch fetch \
+uv run sumosearch fetch \
   --query '_sourceCategory=prod/api level=error' \
   --from 2026-03-20T09:00:00 \
   --to 2026-03-20T10:00:00
@@ -118,7 +118,7 @@ sumosearch fetch \
 **JSON output — pipe to `jq`:**
 
 ```bash
-sumosearch fetch \
+uv run sumosearch fetch \
   --query '_sourceCategory=prod/api status=500' \
   --from 2026-03-20T00:00:00 \
   --to 2026-03-20T23:59:59 \
@@ -128,7 +128,7 @@ sumosearch fetch \
 **CSV output — save to file:**
 
 ```bash
-sumosearch fetch \
+uv run sumosearch fetch \
   --query 'error OR exception' \
   --from 2026-03-19T00:00:00 \
   --to 2026-03-20T00:00:00 \
@@ -138,7 +138,7 @@ sumosearch fetch \
 **Sort newest first, fetch 500 results across 5 pages:**
 
 ```bash
-sumosearch fetch \
+uv run sumosearch fetch \
   --query '_sourceCategory=payments timeout' \
   --from 2026-03-20T08:00:00 \
   --to 2026-03-20T09:00:00 \
@@ -150,7 +150,7 @@ sumosearch fetch \
 **Non-US deployment with verbose output:**
 
 ```bash
-sumosearch fetch \
+uv run sumosearch fetch \
   --query 'pod=checkout-service' \
   --from 2026-03-20T00:00:00 \
   --to 2026-03-20T01:00:00 \
@@ -199,7 +199,7 @@ uv run sumosearch --help
 ## Troubleshooting
 
 **`Error: credentials not found`**
-Run `sumosearch init` or set the `SUMO_ACCESS_ID` and `SUMO_ACCESS_KEY` environment variables.
+Run `uv run sumosearch init` or set the `SUMO_ACCESS_ID` and `SUMO_ACCESS_KEY` environment variables.
 
 **`Error: endpoint must start with https://`**
 Check the `SUMO_ENDPOINT` value or `--endpoint` flag — it must be a full `https://` URL.
